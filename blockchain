@@ -49,3 +49,41 @@ class Blockchain:
         """
         block_string = json.dumps(block, sort_keys=True).encode()
         return hashlib.sha256(block_string).hexdigest()
+@property
+    def last_block(self):
+        return self.chain[-1]
+
+    def encrypt_data(self, data):
+        """
+        Encrypts the data using symmetric encryption
+        """
+        cipher_suite = Fernet(self.key)
+        encrypted_data = cipher_suite.encrypt(str(data).encode())
+        return encrypted_data
+
+    def decrypt_data(self, encrypted_data):
+        """
+        Decrypts the encrypted data using symmetric decryption
+        """
+        cipher_suite = Fernet(self.key)
+        decrypted_data = cipher_suite.decrypt(encrypted_data)
+        return decrypted_data.decode()
+
+    def valid_proof(self, last_proof, proof):
+        """
+        Validates the proof: Does hash(last_proof, proof) contain 4 leading zeroes?
+        """
+        guess = f'{last_proof}{proof}'.encode()
+        guess_hash = hashlib.sha256(guess).hexdigest()
+        return guess_hash[:4] == "0000"
+
+    def proof_of_work(self, last_proof):
+        """
+        Simple Proof of Work Algorithm:
+         - Find a number 'proof' such that hash(last_proof, proof) contains 4 leading zeroes
+         - 'last_proof' is the previous proof, and 'proof' is the new proof
+        """
+        proof = 0
+        while self.valid_proof(last_proof, proof) is False:
+            proof += 1
+        return proof
