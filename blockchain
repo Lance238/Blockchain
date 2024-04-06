@@ -87,3 +87,60 @@ class Blockchain:
         while self.valid_proof(last_proof, proof) is False:
             proof += 1
         return proof
+
+def main_menu():
+    print("Welcome to the Online Privacy Protection Application")
+    print("1. Submit Personal Data")
+    print("2. View Blockchain")
+    print("3. Exit")
+
+
+def submit_data():
+    name = input("Enter your name: ")
+    email = input("Enter your email: ")
+    data = input("Enter your personal data: ")
+
+    # Placeholder method to get user's public address
+    sender_address = get_user_address()  # Replace with actual method to get user's address
+
+    # Placeholder recipient address
+    recipient_address = "CentralAuthorityWalletAddress"  # Replace with actual recipient address
+
+    # Create a new transaction and add it to the current transactions
+    transaction_index = blockchain.new_transaction(sender_address, recipient_address, {
+        'name': name,
+        'email': email,
+        'data': data
+    })
+
+    print(f"Data submitted successfully! Transaction ID: {transaction_index}")
+
+
+def view_blockchain():
+    # Display the blockchain
+    print("Blockchain:")
+    print(json.dumps(blockchain.chain, indent=4))
+
+
+def get_user_address():
+    # Placeholder method to get user's public address
+    return "UserPublicAddress"  # Replace with actual method to get user's address
+
+
+# Creating a Blockchain instance
+blockchain = Blockchain()
+
+while True:
+    main_menu()
+    choice = input("Enter your choice: ")
+
+    if choice == "1":
+        submit_data()
+    elif choice == "2":
+        view_blockchain()
+    elif choice == "3":
+        print("Exiting...")
+        break
+    else:
+        print("Invalid choice. Please try again.")
+
