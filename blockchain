@@ -100,7 +100,12 @@ def submit_data():
     email = input("Enter your email: ")
     data = input("Enter your personal data: ")
 
-    
+    # Placeholder method to get user's public address
+    sender_address = get_user_address()  # Replace with actual method to get user's address
+
+    # Placeholder recipient address
+    recipient_address = "CentralAuthorityWalletAddress"  # Replace with actual recipient address
+
     # Create a new transaction and add it to the current transactions
     transaction_index = blockchain.new_transaction(sender_address, recipient_address, {
         'name': name,
@@ -109,7 +114,6 @@ def submit_data():
     })
 
     print(f"Data submitted successfully! Transaction ID: {transaction_index}")
-
 
 def view_blockchain():
     # Display the blockchain
